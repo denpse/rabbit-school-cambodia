@@ -72,7 +72,7 @@ const ANIMATION_DURATION = 20; // seconds for logo carousel
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
-    opacity: 2,
+    opacity: 1,
     transition: { staggerChildren: 0.25 },
   },
 };
