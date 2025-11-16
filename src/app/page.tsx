@@ -13,7 +13,7 @@ import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { useTranslations, useLocale } from 'next-intl';
+import { useTranslations, useLocale } from "next-intl";
 import DonationLink from "@/components/ui/donation-link";
 import { getImpactData } from "../services/impact";
 
@@ -57,14 +57,22 @@ interface SectionProps {
 
 // Constants
 const ICONS = [GraduationCap, MapPin, Backpack, Rainbow] as const;
-const LOGO_IMAGES = [logos, logos2, logos3, logos4, logos5, logos6, logos7] as const;
+const LOGO_IMAGES = [
+  logos,
+  logos2,
+  logos3,
+  logos4,
+  logos5,
+  logos6,
+  logos7,
+] as const;
 const ANIMATION_DURATION = 20; // seconds for logo carousel
 
 // Animation variants
 const containerVariants = {
   hidden: { opacity: 0 },
   show: {
-    opacity: 1,
+    opacity: 2,
     transition: { staggerChildren: 0.25 },
   },
 };
@@ -92,9 +100,12 @@ const HeroSection = ({
   description,
   buttonText,
   buttonHref,
-  overlayOpacity = 0.6
+  overlayOpacity = 0.6,
 }: HeroSectionProps) => (
-  <section className="relative w-full h-[500px] sm:h-[600px] md:h-[700px]" role="banner">
+  <section
+    className="relative w-full h-[500px] sm:h-[600px] md:h-[700px]"
+    role="banner"
+  >
     <Image
       src={imageSrc}
       alt={imageAlt}
@@ -164,14 +175,18 @@ const ContentSection = ({
   imageSrc,
   imageAlt,
   backgroundColor = "bg-[#F7F5F4]",
-  imageOnLeft = false
+  imageOnLeft = false,
 }: SectionProps) => (
   <section className={`${backgroundColor} py-16`}>
     <div className="max-w-7xl mx-auto px-6">
-      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${imageOnLeft ? 'lg:grid-flow-col-dense' : ''}`}>
+      <div
+        className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
+          imageOnLeft ? "lg:grid-flow-col-dense" : ""
+        }`}
+      >
         {/* Text Content */}
         <motion.div
-          className={`space-y-6 ${imageOnLeft ? 'lg:col-start-2' : ''}`}
+          className={`space-y-6 ${imageOnLeft ? "lg:col-start-2" : ""}`}
           initial={{ opacity: 0, x: imageOnLeft ? 80 : -80 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -215,7 +230,9 @@ const ContentSection = ({
 
         {/* Image */}
         <motion.div
-          className={`flex justify-center ${imageOnLeft ? 'lg:col-start-1 lg:row-start-1' : ''}`}
+          className={`flex justify-center ${
+            imageOnLeft ? "lg:col-start-1 lg:row-start-1" : ""
+          }`}
           initial={{ opacity: 0, scale: 0.8 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.3, ease: "easeOut" }}
@@ -274,11 +291,11 @@ export default function Home() {
     setError(null);
 
     try {
-      const data = await getImpactData(locale || 'en');
+      const data = await getImpactData(locale || "en");
       setImpactData(data);
     } catch (err) {
       console.error("Error fetching impact data:", err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch data');
+      setError(err instanceof Error ? err.message : "Failed to fetch data");
     } finally {
       setIsLoading(false);
     }
@@ -372,7 +389,10 @@ export default function Home() {
                   >
                     <div className="flex justify-center mb-4">
                       <div className="p-3 bg-[#8BAEA7]/20 rounded-full">
-                        <Icon className="w-8 h-8 text-[#623D3C]" aria-hidden="true" />
+                        <Icon
+                          className="w-8 h-8 text-[#623D3C]"
+                          aria-hidden="true"
+                        />
                       </div>
                     </div>
 
@@ -382,7 +402,8 @@ export default function Home() {
                         duration={2.5}
                         separator=","
                         preserveValue
-                      />+
+                      />
+                      +
                     </div>
 
                     <p className="text-gray-600 text-sm md:text-base leading-relaxed">
@@ -424,7 +445,11 @@ export default function Home() {
           </div>
 
           {/* Logo Carousel */}
-          <div className="overflow-hidden relative" role="region" aria-label="Partner logos">
+          <div
+            className="overflow-hidden relative"
+            role="region"
+            aria-label="Partner logos"
+          >
             <motion.div
               className="flex gap-12 items-center"
               animate={{ x: ["0%", "-50%"] }}
