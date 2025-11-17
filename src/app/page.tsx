@@ -7,22 +7,19 @@ import {
   Backpack,
   Rainbow,
   ArrowRight,
-  Loader2,
 } from "lucide-react";
+
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import DonationLink from "@/components/ui/donation-link";
-import { getImpactData } from "../services/impact";
 
 // Image imports
-import pic1 from "../../public/picture/header.jpg";
-import pic3 from "../../public/picture/Screenshot 2025-04-13 at 14.20.06.png";
-import pic2 from "../../public/images/ss.jpg";
+import pic1 from "../../public/images/smile-boy.jpg";
+import pic3 from "../../public/images/new1.jpg";
+import pic2 from "../../public/images/P15.jpg";
 import getInvolvedPic from "../../public/images/image copy 7.png";
-import donate from "../../public/donate.png";
 
 // Partner logos
 import logos from "../../public/donors&partners/pse-logo.png";
@@ -32,7 +29,8 @@ import logos4 from "../../public/donors&partners/smart-logo.png";
 import logos5 from "../../public/donors&partners/ccf-logo.png";
 import logos6 from "../../public/donors&partners/epil-logo.jpg";
 import logos7 from "../../public/donors&partners/manulife-logo.png";
-import { ImpactData } from "./types/impact";
+import { toKhmer } from "./utils/khmerNumbers";
+import { useImpactData } from "@/hooks/useImpactData";
 
 interface HeroSectionProps {
   imageSrc: import("next/image").StaticImageData;
@@ -117,7 +115,7 @@ const HeroSection = ({
     />
 
     <div
-      className="absolute inset-0 bg-[#623D3C]"
+      className="absolute inset-0 bg-[#623d3c65]"
       style={{ opacity: overlayOpacity }}
       aria-hidden="true"
     />
@@ -174,10 +172,10 @@ const ContentSection = ({
   buttonHref,
   imageSrc,
   imageAlt,
-  backgroundColor = "bg-[#F7F5F4]",
+  // backgroundColor = "bg-[#8BAEA7]",
   imageOnLeft = false,
 }: SectionProps) => (
-  <section className={`${backgroundColor} py-16`}>
+  <section className={` py-16`}>
     <div className="max-w-7xl mx-auto px-6">
       <div
         className={`grid grid-cols-1 lg:grid-cols-2 gap-12 items-center ${
@@ -241,7 +239,7 @@ const ContentSection = ({
           <motion.div
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 200, damping: 10 }}
-            className="relative overflow-hidden rounded-2xl shadow-xl"
+            className="relative overflow-hidden rounded-2xl"
           >
             <Image
               src={imageSrc}
@@ -259,53 +257,11 @@ const ContentSection = ({
   </section>
 );
 
-const LoadingSpinner = () => (
-  <div className="flex items-center justify-center py-12">
-    <Loader2 className="w-8 h-8 animate-spin text-[#623D3C]" />
-    <span className="ml-2 text-[#623D3C]">Loading impact data...</span>
-  </div>
-);
-
-const ErrorMessage = ({ onRetry }: { onRetry: () => void }) => (
-  <div className="text-center py-12">
-    <p className="text-red-600 mb-4">Failed to load impact data</p>
-    <button
-      onClick={onRetry}
-      className="text-[#623D3C] hover:text-[#623D3C]/80 font-medium focus:outline-none focus:underline"
-    >
-      Try again
-    </button>
-  </div>
-);
-
 export default function Home() {
   const t = useTranslations();
   const locale = useLocale();
-  const [impactData, setImpactData] = useState<ImpactData[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const impactData = useImpactData();
 
-  // Memoized fetch function
-  const fetchImpactData = useCallback(async () => {
-    setIsLoading(true);
-    setError(null);
-
-    try {
-      const data = await getImpactData(locale || "en");
-      setImpactData(data);
-    } catch (err) {
-      console.error("Error fetching impact data:", err);
-      setError(err instanceof Error ? err.message : "Failed to fetch data");
-    } finally {
-      setIsLoading(false);
-    }
-  }, [locale]);
-
-  useEffect(() => {
-    fetchImpactData();
-  }, [fetchImpactData]);
-
-  // Memoized doubled logo array for seamless scrolling
   const doubledLogos = useMemo(() => [...LOGO_IMAGES, ...LOGO_IMAGES], []);
 
   return (
@@ -365,55 +321,75 @@ export default function Home() {
             </motion.p>
           </div>
 
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : error ? (
-            <ErrorMessage onRetry={fetchImpactData} />
-          ) : (
-            <motion.div
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="show"
-              viewport={{ once: true, margin: "-100px" }}
-            >
-              {impactData.map((item, index) => {
-                const Icon = ICONS[index % ICONS.length];
-                return (
-                  <motion.div
-                    key={`${item.description}-${index}`}
-                    variants={cardVariants}
-                    className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300 border border-[#623D3C]/10"
-                    whileHover={{ y: -5 }}
-                    transition={{ type: "spring", stiffness: 300 }}
-                  >
-                    <div className="flex justify-center mb-4">
-                      <div className="p-3 bg-[#8BAEA7]/20 rounded-full">
-                        <Icon
-                          className="w-8 h-8 text-[#623D3C]"
-                          aria-hidden="true"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="text-3xl md:text-4xl font-extrabold text-[#623D3C] mb-2">
-                      <CountUp
-                        end={item.value}
-                        duration={2.5}
-                        separator=","
-                        preserveValue
+          <motion.div
+            key={locale}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            {impactData.map((item, index) => {
+              // const Icon = ICONS[index % ICONS.length];
+              return (
+                <motion.div
+                  // key={`${item.description}-${index}`}
+                  key={`${locale}-${item.description}-${index}`}
+                  variants={cardVariants}
+                  className="bg-white rounded-2xl shadow-lg p-6 text-center hover:shadow-xl transition-shadow duration-300 border border-[#623D3C]/10"
+                  whileHover={{ y: -5 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  <div className="flex justify-center mb-4">
+                    <div
+                    // className="p-3 bg-[#8BAEA7]/20 rounded-full"
+                    >
+                      <Image
+                        className="w-12 h-12 text-[#623D3C]"
+                        src={item.icon}
+                        width={100}
+                        height={100}
+                        alt="icon"
                       />
-                      +
+                      {/* <Icon
+                        className="w-8 h-8 text-[#623D3C]"
+                        aria-hidden="true"
+                      /> */}
                     </div>
+                  </div>
 
-                    <p className="text-gray-600 text-sm md:text-base leading-relaxed">
-                      {item.description}
-                    </p>
-                  </motion.div>
-                );
-              })}
-            </motion.div>
-          )}
+                  <div className="text-3xl md:text-4xl font-extrabold text-[#623D3C] mb-2">
+                    {locale === "km" ? (
+                      <div>
+                        <CountUp
+                          end={item.value}
+                          duration={2.5}
+                          formattingFn={(value: number) => {
+                            return toKhmer(value);
+                          }}
+                        />
+                        +
+                      </div>
+                    ) : (
+                      <>
+                        <CountUp
+                          end={item.value}
+                          duration={2.5}
+                          separator=","
+                          preserveValue
+                        />
+                        +
+                      </>
+                    )}
+                  </div>
+
+                  <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
@@ -480,7 +456,7 @@ export default function Home() {
       </section>
 
       {/* Donation Section */}
-      <section className="bg-[#FFD45F] py-16">
+      {/* <section className="bg-[#FFD45F] py-16">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -521,7 +497,7 @@ export default function Home() {
             </motion.div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Get Involved Section */}
       <ContentSection

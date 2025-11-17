@@ -1,22 +1,29 @@
 export const impactData = [
   {
-    value: 4000,
-    description: "Have benefited from our education programs since 2013",
+    value: "6850+",
+    description:
+      "students have gained the confidence and skills to thrive in a world that often overlooks them. (ICON: Brown graduation hat)",
+    number: 6850,
   },
   {
-    value: 500,
-    description: "Students with intellectual disabilities and autism are currently enrolled in our school",
+    value: "134+",
+    description:
+      "Teachers trained by Rabbit School are becoming agents of change, helping to create inclusive classrooms where every child can excel. estimation of trained teachers (ICON: Brown construction blocks)",
+    number: 134,
   },
   {
-    value: 60,
-    description: "Teachers have received training in special education",
+    value: "850+",
+    description:
+      "students with intellectual disabilities and autism are currently enrolled in our programs.  (ICON: Brown Pencil)",
+    number: 850,
   },
   {
-    value: 200,
-    description: "Classrooms in 16 schools are now inclusive learning environments for children with intellectual disabilities",
+    value: "118+",
+    description:
+      "classrooms are now open to children with special needs across 16 public schools. (ICON: Brown rainbow)",
+    number: 118,
   },
 ];
-
 
 // export type ImpactItem = {
 //   value: number;

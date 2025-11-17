@@ -13,7 +13,6 @@ export async function getImpactData(locale: string = "en") {
 
   const data = await res.json();
 
-
   // return res;
   return data.data.map((item: APIResponse) => {
     const value = parseInt(item.total.replace("+", ""), 10);
@@ -24,4 +23,3 @@ export async function getImpactData(locale: string = "en") {
     };
   });
 }
-

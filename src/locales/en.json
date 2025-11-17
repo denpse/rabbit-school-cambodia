@@ -24,6 +24,32 @@
       "classrooms": "Classrooms in 16 schools are now inclusive learning environments for children with intellectual disabilities"
     }
   },
+  "impacts": {
+    "studentsTrained": {
+      "valueNumber": "6850+",
+      "value": 6850,
+      "description": "students have gained the confidence and skills to thrive in a world that often overlooks them.",
+      "icon": "Brown graduation hat"
+    },
+    "teachersTrained": {
+      "valueNumber": "134+",
+      "value": 134,
+      "description": "Teachers trained by Rabbit School are becoming agents of change, helping to create inclusive classrooms where every child can excel.",
+      "icon": "Brown construction blocks"
+    },
+    "studentsEnrolled": {
+      "valueNumber": "850+",
+      "value": 850,
+      "description": "students with intellectual disabilities and autism are currently enrolled in our programs.",
+      "icon": "Brown Pencil"
+    },
+    "classrooms": {
+      "valueNumber": "118+",
+      "value": 118,
+      "description": "classrooms are now open to children with special needs across 16 public schools.",
+      "icon": "Brown rainbow"
+    }
+  },
   "partners": {
     "title": "OUR PARTNERS AND DONORS",
     "description": "Working together with our corporate partners, we make a far bigger impact than we could by acting alone. Together we can make real change happen at scale."
