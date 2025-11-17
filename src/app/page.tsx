@@ -54,7 +54,7 @@ interface SectionProps {
 }
 
 // Constants
-const ICONS = [GraduationCap, MapPin, Backpack, Rainbow] as const;
+// const ICONS = [GraduationCap, MapPin, Backpack, Rainbow] as const;
 const LOGO_IMAGES = [
   logos,
   logos2,
