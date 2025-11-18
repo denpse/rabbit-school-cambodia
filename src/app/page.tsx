@@ -1,14 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import {
-  GraduationCap,
-  MapPin,
-  Backpack,
-  Rainbow,
-  ArrowRight,
-} from "lucide-react";
-
+import { ArrowRight } from "lucide-react";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -16,10 +9,10 @@ import { useMemo } from "react";
 import { useTranslations, useLocale } from "next-intl";
 
 // Image imports
-import pic1 from "../../public/images/smile-boy.jpg";
-import pic3 from "../../public/images/new1.jpg";
-import pic2 from "../../public/images/P15.jpg";
-import getInvolvedPic from "../../public/images/image copy 7.png";
+import pic1 from "../../public/images/New Pictures P1.jpg";
+import pic2 from "../../public/images/New Pictures P2.jpg";
+import pic3 from "../../public/images/New Pictures P3.jpg";
+import pic4 from "../../public/images/New Pictures P4.jpg";
 
 // Partner logos
 import logos from "../../public/donors&partners/pse-logo.png";
@@ -104,18 +97,21 @@ const HeroSection = ({
     className="relative w-full h-[500px] sm:h-[600px] md:h-[700px]"
     role="banner"
   >
-    <Image
-      src={imageSrc}
-      alt={imageAlt}
-      fill
-      className="object-cover"
-      priority={imageSrc === pic1} // Only prioritize the first hero image
-      sizes="100vw"
-      quality={85}
-    />
+    <div>
+      <Image
+        src={imageSrc}
+        alt={imageAlt}
+        layout="fill"
+        // className="object-cover "
+        objectFit="cover"
+        priority={imageSrc === pic1} // Only prioritize the first hero image
+        // sizes="100vw"
+        quality={100}
+      />
+    </div>
 
     <div
-      className="absolute inset-0 bg-[#623d3c65]"
+      className="absolute inset-0 bg-[#623d3c4c]"
       style={{ opacity: overlayOpacity }}
       aria-hidden="true"
     />
@@ -276,7 +272,7 @@ export default function Home() {
 
       {/* Our Story Section */}
       <HeroSection
-        imageSrc={pic3}
+        imageSrc={pic2}
         imageAlt="Our story at Rabbit School"
         title={t("story.title")}
         description={t("story.description")}
@@ -290,7 +286,7 @@ export default function Home() {
         description={t("howWeWork.description")}
         buttonText={t("howWeWork.button")}
         buttonHref="/we-work"
-        imageSrc={pic2}
+        imageSrc={pic3}
         imageAlt="Children learning together at Rabbit School"
         backgroundColor="bg-[#F7F5F4]"
       />
@@ -505,7 +501,7 @@ export default function Home() {
         description={t("getInvolved.description")}
         buttonText={t("getInvolved.button")}
         buttonHref="/get-involved"
-        imageSrc={getInvolvedPic}
+        imageSrc={pic4}
         imageAlt="Students and volunteers at Rabbit School"
         backgroundColor="bg-[#8BAEA7]"
         imageOnLeft={true}
